@@ -13,6 +13,7 @@
 		952162F9146FE5D000A29E71 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 952162F7146FE5D000A29E71 /* InfoPlist.strings */; };
 		952162FB146FE5D000A29E71 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 952162FA146FE5D000A29E71 /* main.m */; };
 		952162FF146FE5D000A29E71 /* PCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 952162FE146FE5D000A29E71 /* PCAppDelegate.m */; };
+		95216307146FE9A100A29E71 /* PCBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95216306146FE9A100A29E71 /* PCBorderView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,12 +21,14 @@
 		952162EE146FE5D000A29E71 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		952162F0146FE5D000A29E71 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		952162F2146FE5D000A29E71 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		952162F6146FE5D000A29E71 /* PerfectCrossfade-Info.plist */ = {isa = PBXFileReference; path = "PerfectCrossfade-Info.plist"; sourceTree = "<group>"; };
+		952162F6146FE5D000A29E71 /* PerfectCrossfade-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PerfectCrossfade-Info.plist"; sourceTree = "<group>"; };
 		952162F8146FE5D000A29E71 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		952162FA146FE5D000A29E71 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		952162FC146FE5D000A29E71 /* PerfectCrossfade-Prefix.pch */ = {isa = PBXFileReference; path = "PerfectCrossfade-Prefix.pch"; sourceTree = "<group>"; };
-		952162FD146FE5D000A29E71 /* PCAppDelegate.h */ = {isa = PBXFileReference; path = PCAppDelegate.h; sourceTree = "<group>"; };
+		952162FC146FE5D000A29E71 /* PerfectCrossfade-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PerfectCrossfade-Prefix.pch"; sourceTree = "<group>"; };
+		952162FD146FE5D000A29E71 /* PCAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PCAppDelegate.h; sourceTree = "<group>"; };
 		952162FE146FE5D000A29E71 /* PCAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PCAppDelegate.m; sourceTree = "<group>"; };
+		95216305146FE9A100A29E71 /* PCBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCBorderView.h; sourceTree = "<group>"; };
+		95216306146FE9A100A29E71 /* PCBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCBorderView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +78,8 @@
 				952162FD146FE5D000A29E71 /* PCAppDelegate.h */,
 				952162FE146FE5D000A29E71 /* PCAppDelegate.m */,
 				952162F5146FE5D000A29E71 /* Supporting Files */,
+				95216305146FE9A100A29E71 /* PCBorderView.h */,
+				95216306146FE9A100A29E71 /* PCBorderView.m */,
 			);
 			path = PerfectCrossfade;
 			sourceTree = "<group>";
@@ -154,6 +159,7 @@
 			files = (
 				952162FB146FE5D000A29E71 /* main.m in Sources */,
 				952162FF146FE5D000A29E71 /* PCAppDelegate.m in Sources */,
+				95216307146FE9A100A29E71 /* PCBorderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

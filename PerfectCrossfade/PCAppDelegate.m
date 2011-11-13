@@ -7,10 +7,70 @@
 //
 
 #import "PCAppDelegate.h"
+#import "PCBorderView.h"
 
 @implementation PCAppDelegate
 
 @synthesize window = _window;
+
+- (void)performCrossfadeFrom:(UIView *)viewA to:(UIView *)viewB
+{
+    viewB.alpha = 0;
+    
+    [UIView animateWithDuration:2 
+                          delay:0.5 
+                        options:UIViewAnimationOptionRepeat | UIViewAnimationOptionAutoreverse
+                     animations:^{
+                         viewA.alpha = 0;
+                         viewB.alpha = 1;
+                     } completion:^(BOOL finished) {
+                         
+                     }];
+}
+
+- (void)createDemoInView:(UIView *)containerView
+{
+    UIColor *semiTransparent = [[UIColor darkGrayColor] colorWithAlphaComponent:0.8];
+    
+    CGRect topFrame = containerView.bounds;
+    topFrame.size.height /= 2;
+    
+    CGRect bottomLeftFrame = topFrame;
+    bottomLeftFrame.origin.y = topFrame.size.height;
+    bottomLeftFrame.size.width /= 1.5;
+    
+    CGRect bottomRightFrame = bottomLeftFrame;
+    bottomRightFrame.origin.x = topFrame.size.width - bottomRightFrame.size.width;
+    
+    UIView *top = [[UIView alloc] initWithFrame:topFrame];
+    top.backgroundColor = semiTransparent;
+    
+    UIView *bottomLeft = [[UIView alloc] initWithFrame:bottomLeftFrame];
+    bottomLeft.backgroundColor = semiTransparent;
+    
+    UIView *bottomRight = [[UIView alloc] initWithFrame:bottomRightFrame];
+    bottomRight.backgroundColor = semiTransparent;
+    
+    CGFloat overlap = CGRectGetMaxX(bottomLeftFrame) - CGRectGetMinX(bottomRightFrame);
+    CGRect borderFrame = CGRectMake(CGRectGetMinX(bottomRightFrame), CGRectGetMaxY(topFrame) - overlap / 2, overlap, overlap);
+    UIView *border = [[PCBorderView alloc] initWithFrame:borderFrame];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectInset(topFrame, 20, 0)];
+    label.backgroundColor = [UIColor clearColor];
+    label.textColor = [UIColor whiteColor];
+    label.font = [UIFont boldSystemFontOfSize:24];
+    label.numberOfLines = 0;
+    label.lineBreakMode = UILineBreakModeWordWrap;
+    label.text = @"The seam inside the blue square should not be visible during the crossfade.";
+    
+    [containerView addSubview:top];
+    [containerView addSubview:bottomLeft];
+    [containerView addSubview:bottomRight];
+    [containerView addSubview:border];
+    [containerView addSubview:label];
+    
+    [self performCrossfadeFrom:bottomLeft to:bottomRight];
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -18,6 +78,9 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
+    [self createDemoInView:self.window];
+    
     return YES;
 }
 
