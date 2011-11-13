@@ -16,34 +16,19 @@
 
 - (void)performCrossfadeFrom:(UIView *)viewA to:(UIView *)viewB
 {
-//viewB.alpha = 0;
-//    
-//    [UIView beginAnimations:@"crossfade" context:nil];
-//    [UIView setAnimationDuration:2];
-//    [UIView setAnimationRepeatAutoreverses:YES];
-//    [UIView setAnimationRepeatCount:HUGE_VALF];
-//
-//    [CATransaction begin];
-//    {
-//        [CATransaction setAnimationDuration:0.5];
-//        CAMediaTimingFunction* clunk = [CAMediaTimingFunction functionWithControlPoints:.9 :.1 :.7 :.9];
-//        [CATransaction setAnimationTimingFunction: clunk];
-//        
-//        viewA.alpha = 0;
-//        viewB.alpha = 1;
-//    }
-//    [CATransaction commit];
-//    
-//    [UIView commitAnimations];
-//    
-//    
     [CATransaction begin];
     {    
         [CATransaction setValue:[NSNumber numberWithFloat:3.0f] forKey:kCATransactionAnimationDuration];
     
+        // Change these control point values to adjust the timing curves.
+        // The CAMediaTimingFunction this creates is an asymmetrical one, in the vertical sense.
+        // On 50% of the animation, both alpha values added together will be greater than 1.0f.
+        CGPoint low = CGPointMake(0.150, 0.000);
+        CGPoint high = CGPointMake(0.500, 0.000);
+        
         [CATransaction begin];
         {
-            CAMediaTimingFunction* perfectIn = [CAMediaTimingFunction functionWithControlPoints:.150 :0.0 :.500 :1.0];
+            CAMediaTimingFunction* perfectIn = [CAMediaTimingFunction functionWithControlPoints:low.x :low.y :1.0 - high.x :1.0 - high.y];
             [CATransaction setAnimationTimingFunction: perfectIn];
             CABasicAnimation *fadeIn = [CABasicAnimation animationWithKeyPath:@"opacity"];
             fadeIn.fromValue = [NSNumber numberWithFloat:0];
@@ -56,7 +41,7 @@
         
         [CATransaction begin];
         {
-            CAMediaTimingFunction* perfectOut = [CAMediaTimingFunction functionWithControlPoints:.500 :0.0 :.850 :1.0];
+            CAMediaTimingFunction* perfectOut = [CAMediaTimingFunction functionWithControlPoints:high.x :high.y :1.0 - low.x : 1.0 - low.y];
             [CATransaction setAnimationTimingFunction: perfectOut];
             CABasicAnimation *fadeOut = [CABasicAnimation animationWithKeyPath:@"opacity"];
             fadeOut.fromValue = [NSNumber numberWithFloat:1.0];
@@ -69,15 +54,17 @@
         
     }
     [CATransaction commit];
-
 }
 
 - (void)createDemoInView:(UIView *)containerView
 {
-    UIColor *semiTransparent = [[UIColor darkGrayColor] colorWithAlphaComponent:0.8];
+    // This color contains the initial transparency of the uiviews.
+    // If you change the alpha component, the curve needs adjustment too :S
+    CGFloat initialTransparency = 0.8;
+    UIColor *semiTransparent = [[UIColor darkGrayColor] colorWithAlphaComponent:initialTransparency];
     
     CGRect topFrame = containerView.bounds;
-    topFrame.size.height /= 2;
+    topFrame.size.height /= 1.5;
     
     CGRect bottomLeftFrame = topFrame;
     bottomLeftFrame.origin.y = topFrame.size.height;
@@ -99,13 +86,16 @@
     CGRect borderFrame = CGRectMake(CGRectGetMinX(bottomRightFrame), CGRectGetMaxY(topFrame) - overlap / 2, overlap, overlap);
     UIView *border = [[PCBorderView alloc] initWithFrame:borderFrame];
     
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectInset(topFrame, 20, 0)];
+    CGRect labelFrame = CGRectInset(topFrame, 20, 0);
+    labelFrame.size.height -= overlap / 2;
+    labelFrame.origin.y += 10;
+    UILabel *label = [[UILabel alloc] initWithFrame:labelFrame];
     label.backgroundColor = [UIColor clearColor];
     label.textColor = [UIColor whiteColor];
-    label.font = [UIFont boldSystemFontOfSize:24];
+    label.font = [UIFont boldSystemFontOfSize:20];
     label.numberOfLines = 0;
     label.lineBreakMode = UILineBreakModeWordWrap;
-    label.text = @"The seam inside the blue square should not be visible during the crossfade.";
+    label.text = [NSString stringWithFormat:@"The seam inside the blue square should not be visible during the crossfade.\n\nA change of the initial transparency will require a change of the s-curve.\n\nInitial transparency = %0.2f", initialTransparency];
     
     [containerView addSubview:top];
     [containerView addSubview:bottomLeft];
@@ -119,52 +109,12 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
+
+    [self createDemoInView:self.window];
+
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-    
-    [self createDemoInView:self.window];
-    
     return YES;
-}
-
-- (void)applicationWillResignActive:(UIApplication *)application
-{
-    /*
-     Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-     Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-     */
-}
-
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
-    /*
-     Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-     If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-     */
-}
-
-- (void)applicationWillEnterForeground:(UIApplication *)application
-{
-    /*
-     Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-     */
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    /*
-     Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-     */
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    /*
-     Called when the application is about to terminate.
-     Save data if appropriate.
-     See also applicationDidEnterBackground:.
-     */
 }
 
 @end
