@@ -8,6 +8,7 @@
 
 #import "PCAppDelegate.h"
 #import "PCBorderView.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation PCAppDelegate
 
@@ -15,17 +16,60 @@
 
 - (void)performCrossfadeFrom:(UIView *)viewA to:(UIView *)viewB
 {
-    viewB.alpha = 0;
+//viewB.alpha = 0;
+//    
+//    [UIView beginAnimations:@"crossfade" context:nil];
+//    [UIView setAnimationDuration:2];
+//    [UIView setAnimationRepeatAutoreverses:YES];
+//    [UIView setAnimationRepeatCount:HUGE_VALF];
+//
+//    [CATransaction begin];
+//    {
+//        [CATransaction setAnimationDuration:0.5];
+//        CAMediaTimingFunction* clunk = [CAMediaTimingFunction functionWithControlPoints:.9 :.1 :.7 :.9];
+//        [CATransaction setAnimationTimingFunction: clunk];
+//        
+//        viewA.alpha = 0;
+//        viewB.alpha = 1;
+//    }
+//    [CATransaction commit];
+//    
+//    [UIView commitAnimations];
+//    
+//    
+    [CATransaction begin];
+    {    
+        [CATransaction setValue:[NSNumber numberWithFloat:3.0f] forKey:kCATransactionAnimationDuration];
     
-    [UIView animateWithDuration:2 
-                          delay:0.5 
-                        options:UIViewAnimationOptionRepeat | UIViewAnimationOptionAutoreverse
-                     animations:^{
-                         viewA.alpha = 0;
-                         viewB.alpha = 1;
-                     } completion:^(BOOL finished) {
-                         
-                     }];
+        [CATransaction begin];
+        {
+            CAMediaTimingFunction* perfectIn = [CAMediaTimingFunction functionWithControlPoints:.150 :0.0 :.500 :1.0];
+            [CATransaction setAnimationTimingFunction: perfectIn];
+            CABasicAnimation *fadeIn = [CABasicAnimation animationWithKeyPath:@"opacity"];
+            fadeIn.fromValue = [NSNumber numberWithFloat:0];
+            fadeIn.toValue = [NSNumber numberWithFloat:1.0];
+            fadeIn.repeatCount = HUGE_VALF;
+            fadeIn.autoreverses = YES;
+            [viewB.layer addAnimation:fadeIn forKey:@"animateOpacity"];
+        }
+        [CATransaction commit];
+        
+        [CATransaction begin];
+        {
+            CAMediaTimingFunction* perfectOut = [CAMediaTimingFunction functionWithControlPoints:.500 :0.0 :.850 :1.0];
+            [CATransaction setAnimationTimingFunction: perfectOut];
+            CABasicAnimation *fadeOut = [CABasicAnimation animationWithKeyPath:@"opacity"];
+            fadeOut.fromValue = [NSNumber numberWithFloat:1.0];
+            fadeOut.toValue = [NSNumber numberWithFloat:0];
+            fadeOut.repeatCount = HUGE_VALF;
+            fadeOut.autoreverses = YES;
+            [viewA.layer addAnimation:fadeOut forKey:@"animateOpacity"];
+        }
+        [CATransaction commit];
+        
+    }
+    [CATransaction commit];
+
 }
 
 - (void)createDemoInView:(UIView *)containerView

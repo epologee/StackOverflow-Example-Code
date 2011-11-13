@@ -14,6 +14,7 @@
 		952162FB146FE5D000A29E71 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 952162FA146FE5D000A29E71 /* main.m */; };
 		952162FF146FE5D000A29E71 /* PCAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 952162FE146FE5D000A29E71 /* PCAppDelegate.m */; };
 		95216307146FE9A100A29E71 /* PCBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95216306146FE9A100A29E71 /* PCBorderView.m */; };
+		95216309146FF0E300A29E71 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95216308146FF0E300A29E71 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		952162FE146FE5D000A29E71 /* PCAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PCAppDelegate.m; sourceTree = "<group>"; };
 		95216305146FE9A100A29E71 /* PCBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCBorderView.h; sourceTree = "<group>"; };
 		95216306146FE9A100A29E71 /* PCBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCBorderView.m; sourceTree = "<group>"; };
+		95216308146FF0E300A29E71 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +41,7 @@
 				952162EF146FE5D000A29E71 /* UIKit.framework in Frameworks */,
 				952162F1146FE5D000A29E71 /* Foundation.framework in Frameworks */,
 				952162F3146FE5D000A29E71 /* CoreGraphics.framework in Frameworks */,
+				95216309146FF0E300A29E71 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +68,7 @@
 		952162ED146FE5D000A29E71 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				95216308146FF0E300A29E71 /* QuartzCore.framework */,
 				952162EE146FE5D000A29E71 /* UIKit.framework */,
 				952162F0146FE5D000A29E71 /* Foundation.framework */,
 				952162F2146FE5D000A29E71 /* CoreGraphics.framework */,
